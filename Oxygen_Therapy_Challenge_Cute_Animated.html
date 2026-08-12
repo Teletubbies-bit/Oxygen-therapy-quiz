@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Oxygen Therapy Challenge 💙</title>
+<style>
+:root{
+  --sky:#dff7ff; --blue:#35b9dc; --deep:#167ca8; --teal:#35c8bb;
+  --pink:#ff8fab; --yellow:#ffd45c; --green:#67c587; --red:#ef6d7d;
+  --ink:#24354b; --muted:#6d7c90; --white:#fff; --cream:#fffdf7;
+  --shadow:0 14px 35px rgba(32,102,137,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:linear-gradient(180deg,#bfeeff 0%,#eafaff 42%,#fffdf9 100%);
+  min-height:100vh; overflow-x:hidden;
+}
+button{font:inherit}
+.bg-bubble{position:fixed;border-radius:50%;background:rgba(255,255,255,.5);pointer-events:none;z-index:0;animation:float 7s ease-in-out infinite}
+.b1{width:70px;height:70px;left:5%;top:18%;animation-delay:-2s}.b2{width:34px;height:34px;right:8%;top:33%;animation-delay:-4s}.b3{width:52px;height:52px;right:16%;bottom:16%;animation-delay:-1s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+
+.shell{position:relative;z-index:1;max-width:1000px;margin:auto;padding:18px 14px 38px}
+header{text-align:center;position:relative;padding:8px 4px 18px}
+.title-row{display:flex;justify-content:center;align-items:center;gap:12px}
+h1{font-size:clamp(28px,6vw,48px);line-height:1;margin:10px 0 7px;color:#1477a0;text-shadow:0 3px 0 #fff;font-weight:900;letter-spacing:-1px}
+h1 span{color:#f06f96}
+.subtitle{margin:0;color:#527087;font-weight:700}
+.badge{display:inline-block;background:#fff;border:2px solid #bdeef8;color:#167ca8;padding:7px 13px;border-radius:999px;font-size:12px;font-weight:900;box-shadow:0 5px 14px rgba(40,130,160,.1)}
+.mascot{width:88px;animation:bob 2.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-7px) rotate(2deg)}}
+
+.app-card{
+  background:rgba(255,255,255,.94); border:3px solid #8edff0; border-radius:30px;
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.topbar{background:linear-gradient(90deg,#27afd5,#4ecfbe);color:#fff;padding:13px 17px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.22);padding:7px 11px;border-radius:999px;font-size:13px;font-weight:800}
+.progress-wrap{padding:12px 18px 0;background:#fff}
+.progress-track{height:12px;background:#e8f5f8;border-radius:99px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,#35b9dc,#72d6c4,#ffd45c);border-radius:99px;transition:width .5s ease}
+.main{padding:20px 22px 25px}
+
+.question-number{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:#7bd1e5;color:#fff;font-size:24px;font-weight:900;box-shadow:inset 0 -4px 0 rgba(0,0,0,.08);margin-bottom:9px}
+.instructions{font-size:18px;font-weight:800;margin:0 0 14px}
+
+.device-box,.case-box{
+  border-radius:22px;padding:17px 19px;margin:12px 0 20px;
+}
+.device-box{background:linear-gradient(135deg,#f3fff5,#f0fbff);border:2px dashed #78cfa0}
+.case-box{background:#fff8ed;border:2px solid #ffd889;position:relative}
+.box-label{font-size:12px;font-weight:900;color:#167ca8;text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.device-list{margin:0;padding-left:28px;line-height:1.9;font-size:18px}
+.device-list li{padding:1px 0}
+.device-list li::marker{font-weight:900;color:#2ba9c9}
+.case-text{font-size:18px;line-height:1.65;margin:0}
+.spacer{height:8px}
+
+.question-block{margin-top:10px}
+.question{font-size:clamp(19px,3vw,24px);line-height:1.55;font-weight:850;margin:0 0 17px}
+.question em{font-style:normal;color:#167ca8}
+
+.options{display:grid;gap:12px}
+.option{
+  width:100%; border:2px solid #d9e7ee;background:#fff;border-radius:18px;padding:15px 16px;
+  text-align:left;font-size:17px;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background .18s ease;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.option:hover{transform:translateY(-2px);box-shadow:0 7px 16px rgba(35,126,160,.1);border-color:#7ed2e3}
+.option:active{transform:translateY(0) scale(.99)}
+.letter{min-width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900}
+.la{background:#32a9d2}.lb{background:#5cc68a}.lc{background:#f5b93d}.ld{background:#ed7995}
+.option.correct{border-color:#4dbb7c;background:#effbf3;animation:correctPop .45s ease}
+.option.wrong{border-color:#ed7885;background:#fff0f3;animation:shake .35s ease}
+@keyframes correctPop{50%{transform:scale(1.02)}}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+.submit{
+  display:block;margin:20px auto 0;border:0;border-radius:999px;padding:14px 27px;
+  background:linear-gradient(180deg,#42c4dd,#199fc4);color:#fff;font-weight:900;box-shadow:0 6px 0 #137fa0;cursor:pointer;
+}
+.submit:active{transform:translateY(3px);box-shadow:0 3px 0 #137fa0}
+.submit.hidden{display:none}
+
+.feedback{display:none;margin-top:20px;border-radius:22px;padding:18px;border:2px solid}
+.feedback.show{display:block;animation:slideIn .4s ease}
+.feedback.correct{background:#effbf3;border-color:#8ad5a7}.feedback.wrong{background:#fff0f3;border-color:#f2a2ad}
+.feedback h3{margin:0 0 8px;font-size:21px}
+.rationale{line-height:1.65;margin-top:8px}
+.remember{margin-top:13px;padding:12px 14px;border-radius:15px;background:#fffdf0;border:1px dashed #e8c75e}
+@keyframes slideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.ref{margin-top:17px}
+.ref-title{font-weight:900;color:#167ca8;margin-bottom:9px}
+.ref-table{width:100%;border-collapse:collapse;background:#fff;border-radius:13px;overflow:hidden;font-size:15px}
+.ref-table th,.ref-table td{border:1px solid #cbd9df;padding:9px;text-align:center}
+.ref-table th{background:#e9f9fc;color:#145c76}
+.reveal-note{font-size:12px;color:#6b7c89;margin-bottom:8px}
+
+.next{
+  display:none;width:100%;margin-top:20px;border:0;border-radius:17px;padding:15px;background:linear-gradient(90deg,#ff9db8,#ff7f9f);
+  color:#fff;font-weight:900;cursor:pointer;box-shadow:0 5px 0 #db6884;
+}
+.next.show{display:block}.next:active{transform:translateY(3px);box-shadow:0 2px 0 #db6884}
+
+.start{text-align:center;padding:36px 20px}
+.start h2,.result h2{font-size:30px;margin:8px 0}
+.start p,.result p{color:var(--muted);line-height:1.7;max-width:650px;margin:10px auto}
+.primary{border:0;border-radius:999px;padding:15px 28px;background:linear-gradient(90deg,#29b4d6,#55cbb9);color:#fff;font-weight:900;font-size:17px;cursor:pointer;box-shadow:0 6px 0 #198ba6}
+.primary:active{transform:translateY(3px);box-shadow:0 3px 0 #198ba6}
+
+.floaters{height:0;position:relative}
+.floaters span{position:absolute;font-size:24px;animation:floatUp 3.5s ease-in-out infinite}
+.f1{left:12%;top:-10px}.f2{right:13%;top:40px;animation-delay:-1s}.f3{left:78%;top:-30px;animation-delay:-2s}
+@keyframes floatUp{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-13px) rotate(8deg)}}
+
+.result{text-align:center;padding:35px 20px}
+.big-score{font-size:62px;font-weight:950;color:#167ca8;margin:7px 0}
+.stars{font-size:32px;letter-spacing:4px}
+.confetti{font-size:28px;animation:confetti 1.4s infinite alternate}
+@keyframes confetti{to{transform:translateY(-10px) rotate(7deg)}}
+
+.footer{text-align:center;color:#6d7c90;font-size:12px;line-height:1.55;margin-top:18px;padding:0 8px}
+.tip{margin-top:18px;background:#f2fbff;border-radius:16px;padding:11px 13px;color:#4d6b7a;font-size:14px}
+
+@media(max-width:600px){
+  .shell{padding:10px 9px 28px}
+  .main{padding:16px 15px 20px}
+  .mascot{width:62px}
+  .device-box,.case-box{padding:14px 15px}
+  .device-list{font-size:16px;line-height:1.85}
+  .case-text{font-size:16px;line-height:1.65}
+  .option{font-size:16px;padding:13px}
+  .topbar{font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="bg-bubble b1"></div><div class="bg-bubble b2"></div><div class="bg-bubble b3"></div>
+
+<div class="shell">
+<header>
+  <div class="floaters"><span class="f1">💙</span><span class="f2">✨</span><span class="f3">🫧</span></div>
+  <div class="title-row">
+    <svg class="mascot" viewBox="0 0 120 140" aria-label="Cute oxygen tank mascot">
+      <rect x="30" y="22" width="60" height="103" rx="25" fill="#69c88c"/>
+      <rect x="37" y="31" width="46" height="80" rx="20" fill="#bff2c8"/>
+      <rect x="44" y="7" width="32" height="22" rx="8" fill="#4ba96f"/>
+      <circle cx="51" cy="65" r="4" fill="#24354b"/><circle cx="69" cy="65" r="4" fill="#24354b"/>
+      <path d="M51 80 Q60 88 69 80" fill="none" stroke="#24354b" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="43" cy="74" r="6" fill="#ff9eb0" opacity=".65"/><circle cx="77" cy="74" r="6" fill="#ff9eb0" opacity=".65"/>
+      <path d="M30 78 Q10 75 13 57" fill="none" stroke="#69c88c" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="12" cy="55" r="7" fill="#ffd45c"/>
+      <path d="M90 80 Q109 77 106 60" fill="none" stroke="#69c88c" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="107" cy="58" r="7" fill="#ffd45c"/>
+      <path d="M48 126 L48 135 M72 126 L72 135" stroke="#4b8d67" stroke-width="7" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <span class="badge">NCID WARD 8F • NED QA</span>
+      <h1>OXYGEN THERAPY <span>CHALLENGE</span></h1>
+      <p class="subtitle">Learn • Recall • Care 💙</p>
+    </div>
+  </div>
+</header>
+
+<div class="app-card">
+  <div id="app"></div>
+</div>
+
+<div class="footer">
+  Content adapted from the provided NCID Ward 8F NED QA material.<br>
+  All information above modified and retrieved from TTSH EDMS, SD-NUR-RES-001.
+</div>
+</div>
+
+<script>
+const questions = [
+{
+ q:"What is the purpose of administering oxygen therapy?",
+ opts:[
+ "To promote comfort and reduce chest pain",
+ "To relieve hypoxia where there is an insufficient amount of oxygen in the tissue cells to meet the demand of an organ or tissue of the body",
+ "To ensure safe and effective administration of nebulisation therapy",
+ "To promote blood circulation in pregnant women"
+ ], a:1,
+ rationale:"The purpose of oxygen therapy is to relieve hypoxia where there is an insufficient amount of oxygen in the tissue cells to meet the demand of an organ or tissue of the body."
+},
+{
+ items:["Nasal cannula","Venti mask","Monnal machine","Non-rebreathing mask","Simple face mask","High concentration mask"],
+ q:"Which of the following above are oxygen devices available in the general ward?",
+ opts:["i, ii, iii","i, iii, iv, v","i, ii, iii, v, vi","i, ii, iv, v, vi"], a:3,
+ rationale:"Monnal machine is a type of advanced mechanical ventilator that is often used in the ICU."
+},
+{
+ q:"The approximate percentage of oxygen delivered by nasal prongs/cannula at 1–6 L/min is:",
+ opts:["24–40%","24–36%","24–44%","28–32%"], a:2,
+ rationale:"Nasal prongs/cannula deliver a low concentration of oxygen from 1–6 L/min.",
+ table:{title:"Nasal cannula reference",headers:["O₂ flow (LPM)","O₂ concentration (%)"],rows:[["1","24%"],["2","28%"],["3","32%"],["4","36%"],["5","40%"],["6","44%"]]}
+},
+{
+ q:"The approximate percentage of oxygen delivered by a simple face mask at 5–8 L/min is:",
+ opts:["24–36%","40–60%","70–80%","100%"], a:1,
+ rationale:"A simple face mask delivers oxygen at flow rates of 5–8 L/min, with an approximate oxygen concentration of 40–60%.",
+ table:{title:"Simple face mask reference",headers:["O₂ flow (LPM)","O₂ concentration (%)"],rows:[["5–6","40%"],["6–7","50%"],["7–8","60%"]]}
+},
+{
+ case:"Mr Lim's oxygen saturation (SpO₂) is 100% on NRM. The team doctor informed the staff nurse in charge to wean down the patient's oxygen as tolerated. The staff nurse in charge decided to wean down the patient's oxygen to a high-concentration mask, with an oxygen concentration of 70%.",
+ q:"How much oxygen flow per minute is required for 70% oxygen concentration with a high-concentration mask?",
+ opts:["10 LPM","15 LPM","12 LPM","8 LPM"], a:0,
+ rationale:"For a high-concentration mask, oxygen is administered at a flow rate of 8–12 L/min to achieve an oxygen concentration of 60–80% and is attached to a 500–1000 mL reservoir bag.",
+ table:{title:"High-concentration mask reference",headers:["O₂ flow (LPM)","O₂ concentration (%)"],rows:[["8","60%"],["10","70%"],["12","80%"]]}
+},
+{
+ q:"What is the oxygen flow rate for a patient on a non-rebreathing mask?",
+ opts:["8 LPM","12 LPM","15 LPM","10 LPM"], a:2,
+ rationale:"According to the provided material, a non-rebreathing mask is administered at a flow rate of 15 L/min and is attached to a 500–1000 mL reservoir bag."
+},
+{
+ q:"Below are monitoring measures provided to a patient receiving oxygen therapy EXCEPT:",
+ opts:[
+ "Check the flow rate and patient comfort periodically to ensure that the correct O₂ concentration is delivered.",
+ "Assess the patient's response to O₂ therapy through continuous clinical assessments. SpO₂ reading is necessary in patients treated with O₂ therapy.",
+ "Monitor the skin condition of the earlobe at the pressure points where the masks fit.",
+ "It is okay to stop O₂ therapy during ambulation, transferring or transportation of a clinically unwell patient with an SpO₂ reading of 93%."
+ ], a:3,
+ rationale:"Avoid interruption to O₂ therapy during ambulation, transferring or transportation of the patient."
+},
+{
+ q:"Venti mask has two adjustable colour-coded diluters (green and white) that enable the mix of specific amounts of air with O₂ to deliver an oxygen concentration range from 24 to 50% at flow rates of 3 to 15 LPM. The statement above is true or false?",
+ opts:["True","False"], a:0,
+ rationale:"The provided material states that the two adjustable colour-coded diluters (green and white) enable the mix of specific amounts of air with O₂ to deliver an oxygen concentration range from 24 to 50% at flow rates of 3 to 15 LPM.",
+ table:{title:"Ventimask reference",headers:["O₂ flow (LPM)","O₂ concentration (%)"],rows:[["3","24–26%"],["6","28–30%"],["9","35%"],["12","40%"],["15","50%"]]}
+},
+{
+ q:"Low oxygen concentration diluter (green) with 3 to 6 litres per minute oxygen flow in Venti mask has an oxygen concentration of 24 to 30%. The statement above is true or false?",
+ opts:["True","False"], a:0,
+ rationale:"The low oxygen concentration diluter (green) provides an oxygen concentration of 24–30% at flow rates of 3–6 L/min.",
+ table:{title:"Low oxygen concentration diluter (green)",headers:["O₂ flow (LPM)","O₂ concentration (%)"],rows:[["3","24–26%"],["6","28–30%"]]}
+},
+{
+ case:"Madam Ros was on a Venti mask with a medium oxygen concentration of 35%.",
+ q:"How much oxygen flow per minute is provided to the patient?",
+ opts:["6 LPM","9 LPM","10 LPM","12 LPM"], a:1,
+ rationale:"For the medium oxygen concentration diluter (white), an oxygen concentration of 35% corresponds to an oxygen flow rate of 9 L/min.",
+ table:{title:"Medium oxygen concentration diluter (white)",headers:["O₂ flow (LPM)","O₂ concentration (%)"],rows:[["9","35%"],["12","40%"],["15","50%"]]}
+}
+];
+
+let current=0, score=0, answered=false;
+
+function renderStart(){
+document.getElementById("app").innerHTML=`
+  <div class="start">
+    <div class="confetti">🫁 ✨ 🫧 💙 ✨ 🫁</div>
+    <h2>Ready for the Oxygen Adventure?</h2>
+    <p>Answer first, then unlock the rationale and reference table. The tables stay hidden until you submit — so you can test your memory before checking the answer.</p>
+    <button class="primary" onclick="startGame()">🚀 Start the Challenge</button>
+    <div class="tip">💡 <b>Game tip:</b> Don't peek! The reference appears only after you answer.</div>
+  </div>`;
+}
+function startGame(){current=0;score=0;renderQuestion();}
+function renderQuestion(){
+  answered=false;
+  const x=questions[current];
+  const progress=(current/questions.length)*100;
+  const list=x.items ? `
+    <div class="device-box">
+      <div class="box-label">🫁 Oxygen devices — read carefully</div>
+      <ol class="device-list" type="i">
+        ${x.items.map(v=>`<li>${v}</li>`).join("")}
+      </ol>
+    </div>
+    <div class="spacer"></div>` : "";
+  const caseBox=x.case ? `
+    <div class="case-box">
+      <div class="box-label">👩‍⚕️ Patient scenario</div>
+      <p class="case-text">${x.case}</p>
+    </div>
+    <div class="spacer"></div>` : "";
+
+  document.getElementById("app").innerHTML=`
+    <div class="topbar">
+      <span class="pill">🧠 Question ${current+1} / ${questions.length}</span>
+      <span class="pill">⭐ Score: ${score}</span>
+      <span class="pill">💨 Oxygen mode: ON</span>
+    </div>
+    <div class="progress-wrap"><div class="progress-track"><div class="progress-bar" style="width:${progress}%"></div></div></div>
+    <main class="main">
+      <div class="question-number">${current+1}</div>
+      <p class="instructions">Take a breath, read carefully, then choose your answer. 😊</p>
+      ${list}
+      ${caseBox}
+      <div class="question-block">
+        <p class="question">${x.q}</p>
+        <div class="options">
+          ${x.opts.map((o,i)=>`
+            <button class="option" onclick="answer(${i})" id="opt${i}">
+              <span class="letter ${['la','lb','lc','ld'][i]}">${String.fromCharCode(65+i)}</span>
+              <span><b>${String.fromCharCode(65+i)}.</b> ${o}</span>
+            </button>`).join("")}
+        </div>
+        <button class="submit" id="submitBtn" onclick="submitReminder()">💙 Lock in my answer</button>
+      </div>
+      <div id="feedback" class="feedback"></div>
+      <button id="next" class="next" onclick="nextQuestion()">${current===questions.length-1?"🏆 Finish Challenge":"Next Question →"}</button>
+    </main>`;
+}
+function submitReminder(){
+  if(answered) return;
+  const chosen=document.querySelector(".option:focus");
+  if(!chosen) {
+    const btn=document.getElementById("submitBtn");
+    btn.textContent="👆 Choose an answer first!";
+    btn.animate([{transform:"translateX(-5px)"},{transform:"translateX(5px)"},{transform:"translateX(0)"}],{duration:280});
+    setTimeout(()=>btn.textContent="💙 Lock in my answer",900);
+  }
+}
+function answer(i){
+  if(answered)return;
+  answered=true;
+  const x=questions[current], correct=i===x.a;
+  if(correct)score++;
+  document.querySelectorAll(".option").forEach((b,n)=>{
+    b.disabled=true;
+    if(n===x.a)b.classList.add("correct");
+    if(n===i && !correct)b.classList.add("wrong");
+  });
+  document.getElementById("submitBtn").classList.add("hidden");
+  const fb=document.getElementById("feedback");
+  fb.className="feedback show "+(correct?"correct":"wrong");
+  fb.innerHTML=`
+    <h3>${correct?"🎉 Correct! Great job!":"🌱 Not quite — keep learning!"}</h3>
+    <div><b>Answer: ${String.fromCharCode(65+x.a)}. ${x.opts[x.a]}</b></div>
+    <div class="rationale"><b>Rationale:</b> ${x.rationale}</div>
+    <div class="remember">💡 <b>Remember this for next time:</b> Take a moment to recall the key flow rate or oxygen concentration before checking the reference.</div>
+    ${x.table?tableHTML(x.table):""}
+  `;
+  document.getElementById("next").classList.add("show");
+  if(correct)celebrate();
+}
+function celebrate(){
+  const emojis=["✨","💙","🫧","⭐","🎉"];
+  for(let i=0;i<10;i++){
+    const s=document.createElement("span");
+    s.textContent=emojis[i%emojis.length];
+    s.style.position="fixed"; s.style.left=(10+Math.random()*80)+"vw"; s.style.top="55vh";
+    s.style.zIndex=20; s.style.fontSize=(18+Math.random()*16)+"px"; s.style.pointerEvents="none";
+    document.body.appendChild(s);
+    s.animate([{transform:"translateY(0) rotate(0)",opacity:1},{transform:`translateY(-${120+Math.random()*180}px) rotate(${Math.random()*240-120}deg)`,opacity:0}],{duration:900+Math.random()*500,easing:"ease-out"});
+    setTimeout(()=>s.remove(),1500);
+  }
+}
+function tableHTML(t){
+ return `<div class="ref">
+   <div class="ref-title">📋 Reference table — unlocked after answering</div>
+   <div class="reveal-note">Now compare the value with the reference to reinforce your memory.</div>
+   <table class="ref-table"><thead><tr>${t.headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead>
+   <tbody>${t.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>
+ </div>`;
+}
+function nextQuestion(){current++; if(current<questions.length)renderQuestion(); else renderResult();}
+function renderResult(){
+ const pct=Math.round(score/questions.length*100);
+ const stars=pct>=90?"⭐⭐⭐⭐⭐":pct>=70?"⭐⭐⭐⭐":pct>=50?"⭐⭐⭐":pct>=30?"⭐⭐":"⭐";
+ document.getElementById("app").innerHTML=`
+   <div class="result">
+     <div class="confetti">🫁 🎉 🫧 💙 ✨</div>
+     <h2>Oxygen Adventure Complete!</h2>
+     <div class="big-score">${score}/${questions.length}</div>
+     <div><b>${pct}%</b></div>
+     <div class="stars">${stars}</div>
+     <p>${pct>=80?"Amazing work! You’re breathing new life into your oxygen-therapy knowledge. 💙":"Good effort! Review the rationales and revealed tables, then have another go. 🌱"}</p>
+     <button class="primary" onclick="startGame()">🔄 Play Again</button>
+     <div class="tip">🧠 <b>Learning trick:</b> Answer first → reveal rationale → check the table → remember the key value.</div>
+   </div>`;
+}
+renderStart();
+</script>
+</body>
+</html>
